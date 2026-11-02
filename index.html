@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="cyan">
+<head>
+  <!-- ===== HEAD START =====
+       Pengaturan dasar halaman.
+       Edit di sini: judul tab (<title>) dan deskripsi (meta description).
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0F14">
+  <meta name="description" content="Portofolio Muh Geris Wiruno Mandawa - web development, AI, musik, dan investasi.">
+  <title>Muh Geris Wiruno Mandawa | Portofolio</title>
+
+  <!-- Ikon tab browser (SVG kecil bergambar ">_") -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0F14'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%232DD4E8' font-family='monospace' font-weight='bold'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+  <!-- Font JetBrains Mono dari Google Fonts (butuh internet) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- File CSS (harus satu folder dengan index.html) -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Kalau JavaScript dimatikan, layar boot disembunyikan -->
+  <noscript><style>.boot { display: none; }</style></noscript>
+  <!-- ===== HEAD END ===== -->
+</head>
+
+<body>
+
+  <!-- ===== BOOT START =====
+       Layar "booting" di awal (efek komputer menyala).
+       Teksnya ada di script.js -> CONFIG.bootLines.
+       Matikan lewat script.js -> CONFIG.tampilkanBoot = false.
+       ============================================================ -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <pre id="bootLog"></pre>
+    <p class="boot-skip">[ ketuk layar untuk melewati ]</p>
+  </div>
+  <!-- ===== BOOT END ===== -->
+
+
+  <!-- ===== EFEK LATAR START =====
+       Canvas hujan kode di belakang konten + garis kemajuan scroll.
+       Tidak perlu diedit. Matikan hujan kode di script.js
+       -> CONFIG.hujanKode = false.
+       ============================================================ -->
+  <canvas id="codeRain" aria-hidden="true"></canvas>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <!-- ===== EFEK LATAR END ===== -->
+
+
+  <!-- ===== NAVBAR START =====
+       Menu atas (tetap menempel saat scroll).
+       Edit di sini: teks menu. href="#id" harus sama dengan
+       id section di bawah (home, about, projects, skills, contact).
+       Di HP: tombol garis tiga membuka/menutup menu (script.js).
+       ============================================================ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+
+      <!-- Logo / nama di kiri -->
+      <a class="brand" href="#home"><span class="green">&gt;_</span> GERIS.WIRU</a>
+
+      <nav class="nav" aria-label="Menu utama">
+
+        <!-- Tombol menu (hanya muncul di layar kecil) -->
+        <button id="icon-nav" class="icon-nav" type="button"
+                aria-label="Buka menu" aria-expanded="false" aria-controls="navLinks">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+        </button>
+
+        <!-- Daftar link menu -->
+        <ul id="navLinks" class="menu-header hidden">
+          <li><a href="#home" class="nav-link">[01] Home</a></li>
+          <li><a href="#about" class="nav-link">[02] About</a></li>
+          <li><a href="#projects" class="nav-link">[03] Projects</a></li>
+          <li><a href="#skills" class="nav-link">[04] Skills</a></li>
+          <li><a href="#contact" class="nav-link">[05] Contact</a></li>
+        </ul>
+
+      </nav>
+    </div>
+  </header>
+  <!-- ===== NAVBAR END ===== -->
+
+
+  <main>
+
+    <!-- ===== HOME START =====
+         Halaman utama.
+         Edit di sini: nama (h1), tagline (.quotes), chip info, tombol.
+         Teks "Halo! Saya" dan teks role yang berganti-ganti
+         diatur di script.js -> CONFIG.helloText dan CONFIG.roles.
+         Foto: ganti src="assets/img-avatar.jpg" sesuai lokasi fotomu.
+         Kalau foto tidak ditemukan, otomatis tampil inisial "GW".
+         ============================================================ -->
+    <section class="hero-section" id="home">
+      <div class="container hero">
+
+        <!-- Kolom teks (kiri) -->
+        <div class="hero-text">
+          <p class="hero-hello"><span id="helloText"></span>_</p>
+
+          <!-- Nama lengkap, tiap kata satu baris -->
+          <h1 class="hero-name glow">
+            <span class="word">Muh</span>
+            <span class="word">Geris</span>
+            <span class="word">Wiruno</span>
+            <span class="word">Mandawa<span class="cursor"></span></span>
+          </h1>
+
+          <!-- Role yang diketik bergantian oleh JS -->
+          <p class="hero-role">
+            <span class="green">&gt;</span> <span id="roleText"></span><span class="blink">_</span>
+          </p>
+
+          <!-- Tagline -->
+          <p class="quotes">//Belajar sambil bikin hal kecil yang berguna &amp; seru</p>
+
+          <!-- Chip info singkat (tambah/hapus sesuka hati) -->
+          <div class="chips">
+            <span class="chip"><span class="status-dot"></span>online</span>
+            <span class="chip">siswa kelas 12</span>
+            <span class="chip">web &middot; ai &middot; music &middot; economics</span>
+          </div>
+
+          <!-- Tombol aksi -->
+          <div class="btn-row">
+            <a class="cmd-btn cmd-btn--solid" href="#about"><span>$</span> tentang_saya</a>
+            <a class="cmd-btn" href="#contact"><span class="green">$</span> hubungi_saya</a>
+          </div>
+        </div>
+
+        <!-- Kolom foto (kanan) -->
+        <div class="hero-photo">
+          <div class="avatar" id="avatar">
+            <img id="avatarImg" src="assets/img-avatar.jpg" alt="Foto Geris memegang gitar akustik">
+            <div class="avatar-fallback" aria-hidden="true">GW</div>
+          </div>
+          <p class="photo-caption">~/foto/geris.jpg</p>
+        </div>
+
+      </div>
+
+      <!-- Petunjuk scroll di dasar Home -->
+      <a href="#about" class="scroll-hint" aria-label="Scroll ke bawah">scroll &darr;</a>
+    </section>
+    <!-- ===== HOME END ===== -->
+
+
+    <!-- ===== ABOUT START =====
+         Tentang saya, dalam jendela terminal "about.txt".
+         Edit di sini: isi paragraf di tiap blok dan daftar minat (.tag).
+         Blok paling bawah adalah terminal interaktif (ketik "help").
+         Daftar perintah terminal ada di script.js -> COMMANDS.
+         ============================================================ -->
+    <section class="section" id="about">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <span class="section-num">[02]</span>
+          <h2 class="section-title">About<span class="blink">_</span></h2>
+          <span class="section-line"></span>
+        </header>
+
+        <div class="window reveal">
+
+          <!-- Bar judul jendela -->
+          <div class="window-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="window-title">about.txt</span>
+          </div>
+
+          <div class="window-body about-body">
+
+            <!-- Blok 1: About Me -->
+            <div class="about-block">
+              <h3 class="prompt-title"><span class="green">$</span> About Me_</h3>
+              <p>
+                Halo, aku <strong>Muh Geris Wiruno Mandawa</strong>, biasa
+                dipanggil Geris atau Wiru. Aku siswa kelas 12 yang suka
+                mengutak-atik kode dan membuat hal-hal kecil yang berguna.
+                Buatku, cara belajar paling seru adalah langsung membuat
+                sesuatu, salah, lalu memperbaikinya.
+              </p>
+            </div>
+
+            <!-- Blok 2: Areas of Interest (tambah <li> untuk minat baru) -->
+            <div class="about-block">
+              <h3 class="prompt-title"><span class="green">$</span> Areas of Interest_</h3>
+              <ul class="tag-list">
+                <li class="tag">Web Development</li>
+                <li class="tag">Programming</li>
+                <li class="tag">AI</li>
+                <li class="tag">Gitar Akustik</li>
+                <li class="tag">Bernyanyi</li>
+                <li class="tag">Ekonomi</li>
+                <li class="tag">Trading &amp; Investasi</li>
+              </ul>
+            </div>
+
+            <!-- Blok 3: Current Focus -->
+            <div class="about-block">
+              <h3 class="prompt-title"><span class="green">$</span> Current Focus_</h3>
+              <p>
+                Saat ini aku fokus memperdalam web development dan
+                bereksperimen dengan AI, sambil terus belajar dasar-dasar ekonomi,
+                trading dan investasi. Di sela-selanya, gitar akustik jadi
+                cara favoritku untuk istirahat.
+              </p>
+            </div>
+
+            <!-- Blok 4: Connect With Me -->
+            <div class="about-block">
+              <h3 class="prompt-title"><span class="green">$</span> Connect With Me_</h3>
+              <p>
+                Aku senang ngobrol soal coding, AI, musik, ekonomi, atau investasi.
+                Kalau mau tukar ide atau kolaborasi, langsung saja ke bagian
+                <a class="text-link" href="#contact">Contact</a>.
+              </p>
+            </div>
+
+            <!-- Blok 5: Terminal interaktif (jangan hapus id-nya) -->
+            <div class="about-block">
+              <h3 class="prompt-title"><span class="green">$</span> Coba_ terminalnya</h3>
+
+              <div class="term">
+                <!-- Area hasil perintah (diisi JS) -->
+                <div class="term-output" id="termOutput" aria-live="polite"></div>
+
+                <!-- Baris input -->
+                <form class="term-line" id="termForm" autocomplete="off">
+                  <label for="termInput" class="green">$</label>
+                  <input class="term-input" id="termInput" type="text"
+                         placeholder="ketik: help" autocapitalize="none"
+                         autocorrect="off" spellcheck="false" enterkeyhint="send">
+                </form>
+              </div>
+
+              <!-- Tombol pintasan perintah (ketuk = jalankan) -->
+              <div class="term-chips">
+                <button class="term-chip" type="button" data-cmd="help">help</button>
+                <button class="term-chip" type="button" data-cmd="whoami">whoami</button>
+                <button class="term-chip" type="button" data-cmd="hobi">hobi</button>
+                <button class="term-chip" type="button" data-cmd="ls">ls</button>
+                <button class="term-chip" type="button" data-cmd="gitar">gitar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ===== ABOUT END ===== -->
+
+
+    <!-- ===== PROJECTS START =====
+         Daftar proyek.
+         Kartu proyek TIDAK ditulis di sini. Kartu dibuat otomatis
+         oleh JavaScript dari daftar PROJECTS di script.js.
+         Yang diedit di sini hanya tombol filter kategori.
+         data-filter harus sama dengan "kategori" di PROJECTS.
+         ============================================================ -->
+    <section class="section" id="projects">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <span class="section-num">[03]</span>
+          <h2 class="section-title">Projects<span class="blink">_</span></h2>
+          <span class="section-line"></span>
+        </header>
+
+        <!-- Tombol filter kategori -->
+        <div class="filter-bar reveal" id="projectFilter">
+          <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true">all</button>
+          <button class="filter-btn" type="button" data-filter="dev" aria-pressed="false">development</button>
+          <button class="filter-btn" type="button" data-filter="ai" aria-pressed="false">ai</button>
+        </div>
+
+        <!-- Wadah kartu (diisi JS - initProjects) -->
+        <div class="project-grid" id="projectGrid"></div>
+
+      </div>
+    </section>
+    <!-- ===== PROJECTS END ===== -->
+
+
+    <!-- ===== SKILLS START =====
+         Keahlian.
+         Bar skill TIDAK ditulis di sini. Dibuat otomatis oleh
+         JavaScript dari daftar SKILLS di script.js.
+         ============================================================ -->
+    <section class="section" id="skills">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <span class="section-num">[04]</span>
+          <h2 class="section-title">Skills<span class="blink">_</span></h2>
+          <span class="section-line"></span>
+        </header>
+
+        <p class="section-note muted reveal">// level = perkiraan jujur, dan terus naik</p>
+
+        <!-- Wadah jendela skill (diisi JS - initSkills) -->
+        <div class="skills-grid" id="skillsGrid"></div>
+
+      </div>
+    </section>
+    <!-- ===== SKILLS END ===== -->
+
+
+    <!-- ===== CONTACT START =====
+         Kontak.
+         Edit di sini: link email, GitHub, Instagram, WhatsApp.
+         Email ditulis di DUA tempat dalam satu baris (href dan
+         teks). Form di sebelah kanan membuka aplikasi email dan
+         otomatis memakai alamat dari link email ini.
+         ============================================================ -->
+    <section class="section" id="contact">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <span class="section-num">[05]</span>
+          <h2 class="section-title">Contact<span class="blink">_</span></h2>
+          <span class="section-line"></span>
+        </header>
+
+        <div class="contact-grid">
+
+          <!-- Kiri: daftar kontak -->
+          <div class="window reveal">
+            <div class="window-bar">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="window-title">kontak.txt</span>
+            </div>
+            <div class="window-body">
+              <p class="muted contact-intro">// ayo ngobrol soal kode, AI, musik, ekonomi, atau investasi</p>
+              <ul class="contact-list">
+                <!-- GANTI link di bawah dengan milikmu -->
+                <li>
+                  <span class="contact-key">email</span>
+                  <a id="emailLink" href="mailto:geris.wiruno31@gmail.com">geris.wiruno31@gmail.com</a>
+                  <button class="copy-btn" id="copyEmail" type="button">[salin]</button>
+                </li>
+                <li>
+                  <span class="contact-key">github</span>
+                  <a href="https://github.com/wiruu31" target="_blank" rel="noopener noreferrer">github.com/wiruu31</a>
+                </li>
+                <li>
+                  <span class="contact-key">instagram</span>
+                  <a href="https://instagram.com/gerswiruno_" target="_blank" rel="noopener noreferrer">@gerswiruno_</a>
+                </li>
+                <li>
+                  <span class="contact-key">whatsapp</span>
+                  <a href="https://wa.me/6280000000000" target="_blank" rel="noopener noreferrer">+62 800-0000-0000</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Kanan: form pesan (membuka aplikasi email) -->
+          <form class="window reveal" id="contactForm">
+            <div class="window-bar">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="window-title">kirim_pesan.sh</span>
+            </div>
+            <div class="window-body">
+              <div class="form-field">
+                <label for="cName">&gt; nama</label>
+                <input type="text" id="cName" placeholder="nama_kamu" required>
+              </div>
+              <div class="form-field">
+                <label for="cMsg">&gt; pesan</label>
+                <textarea id="cMsg" rows="4" placeholder="tulis_pesan_di_sini..." required></textarea>
+              </div>
+              <button type="submit" class="cmd-btn cmd-btn--solid"><span>$</span> kirim_pesan</button>
+              <p class="form-status" id="formStatus" aria-live="polite"></p>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+    <!-- ===== CONTACT END ===== -->
+
+  </main>
+
+
+  <!-- ===== FOOTER START =====
+       Bagian paling bawah: hak cipta (tahun otomatis dari JS),
+       pengganti warna tema, dan tombol kembali ke atas.
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Muh Geris Wiruno Mandawa &mdash; dibuat dengan ai <span class="green">&lt;/&gt;</span> &amp; kopi</p>
+
+      <!-- Pengganti warna tema (warna diatur di style.css -> THEME) -->
+      <div class="theme-switch" id="themeSwitch">
+        <span class="muted">tema:</span>
+        <button class="theme-dot" type="button" data-theme="cyan" aria-label="Tema cyan" aria-pressed="false"></button>
+        <button class="theme-dot" type="button" data-theme="green" aria-label="Tema hijau" aria-pressed="false"></button>
+        <button class="theme-dot" type="button" data-theme="amber" aria-label="Tema amber" aria-pressed="false"></button>
+        <button class="theme-dot" type="button" data-theme="pink" aria-label="Tema pink" aria-pressed="false"></button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tombol kembali ke atas (muncul setelah scroll) -->
+  <a href="#home" class="to-top" id="toTop" aria-label="Kembali ke atas">&uarr;</a>
+  <!-- ===== FOOTER END ===== -->
+
+
+  <!-- File JavaScript (di akhir body supaya HTML termuat dulu) -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,918 @@
+/* ================================================================
+   STYLE.CSS - PORTOFOLIO GERIS.WIRU
+   Tips navigasi (edit lewat HP): pakai fitur "cari" di editor,
+   lalu ketik nama bagian + " START", contoh:
+   "HOME START", "ABOUT START", "PROJECTS START".
+   Kata yang sama dipakai di index.html dan script.js.
+
+   Daftar bagian:
+   VARIABEL & TEMA | RESET | KELAS BANTU | EFEK LATAR | BOOT |
+   NAVBAR | HOME | ABOUT | PROJECTS | SKILLS | CONTACT | FOOTER |
+   ANIMASI | RESPONSIF | AKSESIBILITAS
+   ================================================================ */
+
+
+/* ===== VARIABEL & TEMA START =====
+   Mau ganti warna / ukuran? Cukup ubah nilai di sini.
+   --accent-rgb dipakai untuk efek glow (angka R,G,B dari warna
+   aksen). Kalau ganti --accent, ganti juga --accent-rgb.
+   ================================================================ */
+:root {
+  --bg: #0A0F14;            /* latar utama */
+  --panel: #0E161D;         /* latar kartu */
+  --panel-dark: #0B1218;    /* latar jendela terminal */
+  --border: #1B2832;        /* garis tipis */
+  --border-strong: #2A3C49; /* garis tombol / kartu */
+  --text: #D7E3EA;          /* teks utama */
+  --text-soft: #B9C8D2;     /* teks paragraf */
+  --muted: #8FA3B0;         /* teks redup */
+
+  --accent: #2DD4E8;        /* warna aksen (cyan) */
+  --accent-rgb: 45, 212, 232;
+  --green: #3DDC84;         /* warna prompt terminal */
+
+  --red: #FF5F57;           /* titik jendela merah */
+  --yellow: #FEBC2E;        /* titik jendela kuning */
+  --mac-green: #28C840;     /* titik jendela hijau */
+
+  --container: 1100px;      /* lebar maksimum konten */
+  --header-h: 72px;         /* tinggi navbar */
+  --pad: clamp(20px, 5vw, 48px);  /* jarak kiri-kanan halaman */
+  --radius: 10px;           /* kelengkungan sudut */
+  --font: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+}
+
+/* Tema warna lain (dipilih lewat titik warna di footer).
+   Nama tema harus sama dengan data-theme di tombol footer. */
+[data-theme="green"] { --accent: #4ADE80; --accent-rgb: 74, 222, 128; }
+[data-theme="amber"] { --accent: #FBBF24; --accent-rgb: 251, 191, 36; }
+[data-theme="pink"]  { --accent: #F472B6; --accent-rgb: 244, 114, 182; }
+
+/* Layar pendek (HP posisi landscape): navbar dibuat lebih tipis */
+@media (max-height: 500px) {
+  :root { --header-h: 56px; }
+}
+/* ===== VARIABEL & TEMA END ===== */
+
+
+/* ===== RESET START =====
+   Pengaturan dasar semua elemen.
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;   /* scroll halus saat klik menu */
+  scroll-padding-top: 0;     /* jarak atas diatur oleh padding section */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+button { font-family: inherit; }
+img { max-width: 100%; display: block; }
+
+::selection { background: rgba(var(--accent-rgb), .3); }
+
+/* Scrollbar tipis (Chrome/Android) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Semua konten di atas efek latar */
+main, .footer { position: relative; z-index: 1; }
+/* ===== RESET END ===== */
+
+
+/* ===== KELAS BANTU START =====
+   Class kecil yang dipakai di banyak tempat.
+   ================================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.accent { color: var(--accent); }
+.green  { color: var(--green); }
+.muted  { color: var(--muted); }
+
+/* Efek cahaya neon pada teks */
+.glow {
+  text-shadow:
+    0 0 8px rgba(var(--accent-rgb), .6),
+    0 0 24px rgba(var(--accent-rgb), .35);
+}
+
+/* Kursor berkedip */
+.blink { animation: blink 1s steps(1) infinite; color: var(--green); }
+.cursor {
+  display: inline-block;
+  width: .45ch;
+  height: .8em;
+  margin-left: 8px;
+  background: var(--text);
+  vertical-align: -0.05em;
+  animation: blink 1s steps(1) infinite;
+}
+
+.text-link { color: var(--accent); border-bottom: 1px dashed var(--accent); }
+.text-link:hover { text-shadow: 0 0 10px rgba(var(--accent-rgb), .6); }
+
+/* Tombol bergaya perintah terminal (dipakai di Home & Contact) */
+.cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: rgba(14, 22, 29, .8);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color .25s, color .25s, box-shadow .25s, transform .25s;
+}
+.cmd-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), .3);
+  transform: translateY(-2px);
+}
+/* Varian tombol utama (terisi warna aksen) */
+.cmd-btn--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+.cmd-btn--solid:hover {
+  color: var(--bg);
+  box-shadow: 0 0 26px rgba(var(--accent-rgb), .55);
+}
+
+/* Jarak antar section + judul section */
+.section { padding: clamp(88px, 9vw, 100px) 0 20px; }
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.section-num { color: var(--green); font-size: 14px; }
+.section-title {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+}
+.section-note { margin: -12px 0 24px; font-size: 14px; }
+
+/* Jendela ala terminal (dipakai di About, Skills, Contact) */
+.window {
+  background: var(--panel-dark);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 50px -22px rgba(0, 0, 0, .85);
+}
+.window-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #0C141B;
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-red    { background: var(--red); }
+.dot-yellow { background: var(--yellow); }
+.dot-green  { background: var(--mac-green); }
+.window-title { margin-left: 8px; font-size: 13px; color: var(--muted); }
+.window-body { padding: clamp(18px, 3vw, 28px); }
+
+/* Animasi muncul saat scroll (class .is-visible diberi oleh JS).
+   Hanya aktif jika JS berjalan (class js-reveal di <html>). */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.js-reveal .reveal.is-visible { opacity: 1; transform: none; }
+/* ===== KELAS BANTU END ===== */
+
+
+/* ===== EFEK LATAR START =====
+   Grid halus, garis scan CRT, canvas hujan kode, progress bar.
+   Hapus blok body::before / body::after kalau tidak suka.
+   ================================================================ */
+/* Kisi halus di belakang konten */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(var(--accent-rgb), .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), .05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+}
+
+/* Garis scan tipis ala monitor CRT */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, .14) 3px
+  );
+  opacity: .35;
+}
+
+/* Canvas hujan kode (digambar oleh script.js) */
+#codeRain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: .14;
+  pointer-events: none;
+}
+
+/* Garis kemajuan scroll di paling atas layar */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 120;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), .8);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+/* ===== EFEK LATAR END ===== */
+
+
+/* ===== BOOT START =====
+   Layar booting di awal halaman.
+   Ada "pengaman": setelah 6 detik layar ini hilang sendiri
+   walaupun script bermasalah.
+   ================================================================ */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--pad);
+  background: #05080B;
+  transition: opacity .6s ease, visibility .6s ease;
+  animation: bootFailsafe 0s linear 6s forwards;
+}
+.boot.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.boot pre {
+  margin: 0 auto 0 0;
+  max-width: 720px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--green);
+  white-space: pre-wrap;
+  text-shadow: 0 0 8px rgba(61, 220, 132, .5);
+}
+.boot-skip { margin-top: 24px; font-size: 12px; color: var(--muted); }
+/* ===== BOOT END ===== */
+
+
+/* ===== NAVBAR START =====
+   Menu atas. Di layar kecil (<= 768px) menu jadi dropdown.
+   Link yang sedang dilihat diberi class .is-active oleh JS.
+   ================================================================ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(10, 15, 20, .82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s, border-color .3s;
+}
+/* Class ini diberi JS saat halaman sudah di-scroll */
+.site-header.is-scrolled {
+  border-bottom-color: var(--border-strong);
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .9);
+}
+
+.header-inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  transition: text-shadow .3s;
+}
+.brand:hover { text-shadow: 0 0 12px rgba(var(--accent-rgb), .7); }
+
+.menu-header {
+  display: flex;
+  gap: 26px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.menu-header li a {
+  display: inline-block;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color .25s, border-color .25s, text-shadow .25s;
+}
+.menu-header li a:hover,
+.menu-header li a.is-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  text-shadow: 0 0 10px rgba(var(--accent-rgb), .5);
+}
+
+/* Tombol menu: tersembunyi di layar lebar */
+.icon-nav {
+  display: none;
+  padding: 6px;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--accent);
+  cursor: pointer;
+  line-height: 0;
+}
+
+@media (max-width: 768px) {
+  .icon-nav { display: inline-flex; }
+
+  /* Menu jadi panel di bawah navbar */
+  .menu-header {
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 6px var(--pad) 14px;
+    background: rgba(10, 15, 20, .97);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .menu-header.hidden { display: none; }
+  .menu-header:not(.hidden) { animation: dropIn .25s ease-out; }
+
+  .menu-header li a {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
+/* ===== NAVBAR END ===== */
+
+
+/* ===== HOME START =====
+   Halaman utama: teks di kiri, foto di kanan.
+   Di layar kecil: foto pindah ke atas, teks di bawah.
+   ================================================================ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--header-h) + 30px) 0 70px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-hello {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: var(--text-soft);
+}
+
+/* Nama besar bercahaya, tiap kata satu baris */
+.hero-name {
+  margin-bottom: 18px;
+  font-size: clamp(44px, 7.5vw, 84px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: var(--accent);
+  animation: flicker 1.6s ease-out 1;
+}
+.hero-name .word { display: block; }
+
+.hero-role {
+  min-height: 1.6em;
+  margin-bottom: 14px;
+  font-size: clamp(16px, 2.4vw, 20px);
+  color: var(--text);
+}
+
+.quotes {
+  margin-bottom: 20px;
+  font-size: clamp(15px, 2.2vw, 20px);
+  color: var(--muted);
+}
+
+/* Chip info kecil */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgba(14, 22, 29, .7);
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mac-green);
+  box-shadow: 0 0 8px var(--mac-green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Foto profil bulat dengan bingkai neon + cincin berputar */
+.hero-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.avatar {
+  position: relative;
+  width: min(320px, 70vw);
+  aspect-ratio: 1 / 1;
+}
+.avatar::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 2px dashed rgba(var(--accent-rgb), .45);
+  animation: spin 26s linear infinite;
+}
+.avatar img,
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--accent);
+  box-shadow:
+    0 0 25px rgba(var(--accent-rgb), .5),
+    0 0 70px rgba(var(--accent-rgb), .2);
+}
+/* Inisial pengganti kalau foto tidak ditemukan */
+.avatar-fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.avatar.no-image img { display: none; }
+.avatar.no-image .avatar-fallback { display: flex; }
+
+.photo-caption { font-size: 12px; color: var(--muted); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  animation: bob 2s ease-in-out infinite;
+}
+.scroll-hint:hover { color: var(--accent); }
+@media (max-height: 560px) { .scroll-hint { display: none; } }
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; gap: 28px; }
+  .hero-photo { order: -1; }          /* foto di atas */
+  .avatar { width: min(220px, 60vw); }
+  .hero-section { padding-bottom: 80px; }
+}
+/* ===== HOME END ===== */
+
+
+/* ===== ABOUT START =====
+   Jendela about.txt berisi 5 blok teks + terminal interaktif.
+   ================================================================ */
+.about-body { display: grid; gap: 24px; }
+
+.about-block + .about-block {
+  padding-top: 22px;
+  border-top: 1px dashed var(--border);
+}
+.prompt-title { margin-bottom: 10px; font-size: 16px; font-weight: 700; }
+.about-block p { color: var(--text-soft); }
+.about-block strong { color: var(--accent); font-weight: 700; }
+
+/* Chip minat */
+.tag-list { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag {
+  padding: 5px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--panel);
+  font-size: 13px;
+  color: var(--muted);
+  transition: color .25s, border-color .25s, box-shadow .25s;
+}
+.tag::before { content: "#"; margin-right: 2px; color: var(--green); }
+.tag:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), .25);
+}
+
+/* Terminal interaktif */
+.term {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #070B0F;
+  font-size: 13.5px;
+}
+.term-output {
+  max-height: 240px;
+  margin-bottom: 8px;
+  overflow-y: auto;
+}
+.term-output:empty { display: none; }
+.term-row {
+  white-space: pre-wrap;       /* pertahankan spasi & baris baru */
+  word-break: break-word;
+  color: var(--text-soft);
+}
+.term-echo { color: var(--text); }
+.term-err  { color: var(--red); }
+
+.term-line { display: flex; align-items: center; gap: 10px; }
+.term-input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  caret-color: var(--accent);
+  font-family: inherit;
+  font-size: 16px;      /* 16px mencegah zoom otomatis di iPhone */
+}
+.term-input::placeholder { color: var(--muted); opacity: .7; }
+
+.term-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.term-chip {
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: transparent;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .25s, border-color .25s;
+}
+.term-chip:hover { color: var(--accent); border-color: var(--accent); }
+/* ===== ABOUT END ===== */
+
+
+/* ===== PROJECTS START =====
+   Tombol filter + kartu proyek (kartu dibuat oleh JS).
+   ================================================================ */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+.filter-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.filter-btn:hover { color: var(--accent); border-color: var(--accent); }
+.filter-btn.is-active {
+  color: var(--bg);
+  border-color: var(--accent);
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 22px;
+}
+.project-empty { color: var(--muted); }
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  animation: cardIn .5s ease-out both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 0 28px rgba(var(--accent-rgb), .22);
+}
+
+.project-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #0C141B;
+  border-bottom: 1px solid var(--border);
+}
+.project-bar .dot { width: 9px; height: 9px; }
+.project-file { margin-left: 6px; font-size: 12px; color: var(--muted); }
+
+.project-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+}
+.project-title { font-size: 17px; color: var(--accent); }
+.project-desc { flex: 1; font-size: 14px; color: var(--muted); }
+
+.project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.project-tags li {
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--green);
+}
+
+.project-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.status-selesai { color: var(--mac-green); }
+.status-proses  { color: var(--yellow); }
+.status-contoh  { color: var(--muted); font-style: italic; }
+.project-link { color: var(--accent); }
+.project-link:hover { text-shadow: 0 0 10px rgba(var(--accent-rgb), .6); }
+.project-link--off { color: var(--muted); }
+/* ===== PROJECTS END ===== */
+
+
+/* ===== SKILLS START =====
+   Jendela skill dengan bar gaya ASCII (dibuat oleh JS).
+   ================================================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 22px;
+}
+
+.skill-row + .skill-row { margin-top: 18px; }
+.skill-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.skill-percent { color: var(--accent); }
+
+.skill-bar {
+  overflow: hidden;
+  font-size: clamp(12px, 3.6vw, 15px);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.skill-bar .on {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(var(--accent-rgb), .6);
+}
+.skill-bar .off { color: var(--border-strong); }
+/* ===== SKILLS END ===== */
+
+
+/* ===== CONTACT START =====
+   Dua jendela: daftar kontak (kiri) dan form pesan (kanan).
+   ================================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.contact-intro { margin-bottom: 14px; font-size: 14px; }
+.contact-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 14px;
+  word-break: break-word;
+}
+.contact-key { min-width: 92px; color: var(--accent); }
+.contact-list a:hover { color: var(--accent); text-decoration: underline; }
+
+.copy-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 12px;
+  color: var(--green);
+  cursor: pointer;
+}
+.copy-btn:hover { text-decoration: underline; }
+
+.form-field { display: grid; gap: 6px; margin-bottom: 16px; }
+.form-field label { font-size: 13px; color: var(--green); }
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  outline: none;
+  background: #070B0F;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color .25s, box-shadow .25s;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), .3);
+}
+.form-status { min-height: 1.6em; margin-top: 12px; font-size: 13px; color: var(--green); }
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+/* ===== CONTACT END ===== */
+
+
+/* ===== FOOTER START =====
+   Footer, pengganti tema, dan tombol kembali ke atas.
+   ================================================================ */
+.footer {
+  margin-top: 70px;
+  padding: 32px 0 40px;
+  border-top: 1px solid var(--border);
+  background: rgba(8, 12, 16, .75);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.theme-switch { display: flex; align-items: center; gap: 10px; }
+.theme-dot {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: var(--c);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.theme-dot:hover { transform: scale(1.15); }
+.theme-dot.is-selected {
+  border-color: var(--text);
+  box-shadow: 0 0 12px var(--c);
+}
+/* Warna tiap titik tema */
+.theme-dot[data-theme="cyan"]  { --c: #2DD4E8; }
+.theme-dot[data-theme="green"] { --c: #4ADE80; }
+.theme-dot[data-theme="amber"] { --c: #FBBF24; }
+.theme-dot[data-theme="pink"]  { --c: #F472B6; }
+
+.to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(10, 15, 20, .9);
+  color: var(--accent);
+  font-size: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .3s, transform .3s, box-shadow .3s;
+}
+.to-top.is-visible { opacity: 1; pointer-events: auto; transform: none; }
+.to-top:hover { box-shadow: 0 0 18px rgba(var(--accent-rgb), .5); }
+/* ===== FOOTER END ===== */
+
+
+/* ===== ANIMASI START =====
+   Semua @keyframes dikumpulkan di sini.
+   ================================================================ */
+@keyframes blink   { 50% { opacity: 0; } }
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes pulse   { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes bob     { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+@keyframes dropIn  { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes cardIn  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes flicker {
+  0%, 18%, 22%, 62%, 100% { opacity: 1; }
+  20%, 60% { opacity: .55; }
+}
+@keyframes bootFailsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+/* ===== ANIMASI END ===== */
+
+
+/* ===== AKSESIBILITAS START =====
+   Untuk pengguna yang mematikan animasi di perangkatnya:
+   semua gerakan dimatikan.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #codeRain { display: none; }
+  .js-reveal .reveal { opacity: 1; transform: none; }
+}
+/* ===== AKSESIBILITAS END ===== */
