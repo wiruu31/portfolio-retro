@@ -78,7 +78,7 @@ const PROJECTS = [
     kategori: "dev",
     tags: ["HTML", "CSS", "JavaScript"],
     status: "selesai",
-    link: "https://wiruu31.github.io/portofolio-retro/"
+    link: "https://wiruu31.github.io/portfolio-retro/"
   },
   {
     judul: "personal-finance",
@@ -86,7 +86,7 @@ const PROJECTS = [
     kategori: "dev",
     tags: ["HTML", "CSS", "JavaScript", "Web App", "Data"],
     status: "selesai",
-    link: "https://wiruu31.github.io/personal-finance-v.1.2.1/keuangan.html"
+    link: "https://wiruu31.github.io/personal-finance-tracker/keuangan.html"
   },
   {
     judul: "chatbot-ai-mini",
