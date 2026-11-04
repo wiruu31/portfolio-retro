@@ -84,7 +84,7 @@ const PROJECTS = [
     judul: "personal-finance",
     deskripsi: "Alat untuk mencatat kas, pendapatan, pengeluaran harian, aset, investasi, dll.",
     kategori: "dev",
-    tags: ["Web App", "Data"],
+    tags: ["HTML", "CSS", "JavaScript", "Web App", "Data"],
     status: "selesai",
     link: "https://wiruu31.github.io/personal-finance-v.1.2.1/keuangan.html"
   },
