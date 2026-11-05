@@ -91,7 +91,7 @@ const PROJECTS = [
   {
     judul: "Blockchain Lab",
     deskripsi: "Visualisasi blockchain & kriptografi",
-    kategori: "Blockchain & Kriptografi",
+    kategori: "blockchain & kriptografi",
     tags: ["Html", "CSS", "JavaScript"],
     status: "selesai",
     link: "https://wiruu31.github.io/blockchain-lab/blockchain.html"
