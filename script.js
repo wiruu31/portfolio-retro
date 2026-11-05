@@ -89,12 +89,12 @@ const PROJECTS = [
     link: "https://wiruu31.github.io/personal-finance-tracker/keuangan.html"
   },
   {
-    judul: "chatbot-ai-mini",
-    deskripsi: "Eksperimen asisten percakapan sederhana memakai API kecerdasan buatan.",
-    kategori: "ai",
-    tags: ["AI", "JavaScript", "API"],
-    status: "perencanaan",
-    link: ""
+    judul: "Blockchain Lab",
+    deskripsi: "Visualisasi blockchain & kriptografi",
+    kategori: "Blockchain & Kriptografi",
+    tags: ["Html", "CSS", "JavaScript"],
+    status: "selesai",
+    link: "https://wiruu31.github.io/blockchain-lab/blockchain.html"
   },
   {
     judul: "jurnal-trading",
