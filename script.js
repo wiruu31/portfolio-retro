@@ -97,12 +97,12 @@ const PROJECTS = [
     link: "https://wiruu31.github.io/blockchain-lab/blockchain.html"
   },
   {
-    judul: "jurnal-trading",
-    deskripsi: "Alat kecil untuk mencatat dan meninjau transaksi trading harian.",
+    judul: "Fret Lab",
+    deskripsi: "Pustaka chord, tuner, dan chord + lirik untuk main gitar dan ukulele.",
     kategori: "dev",
-    tags: ["Web App", "Data"],
-    status: "perencanaan",
-    link: ""
+    tags: ["HTML", "CSS", "JavaScript", "Web App", "Data"],
+    status: "selesai",
+    link: "https://wiruu31.github.io/fret-lab/fretlab.html"
   },
 ];
 
