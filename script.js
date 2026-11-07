@@ -104,6 +104,14 @@ const PROJECTS = [
     status: "selesai",
     link: "https://wiruu31.github.io/fret-lab/fretlab.html"
   },
+  {
+    judul: "Blockchain Keep",
+    deskripsi: "Brankas pribadi terenkripsi untuk catatan, sandi akun, dan berkas kecil.",
+    kategori: "dev",
+    tags: ["HTML", "CSS", "JavaScript", "Web App", "Data", "API", "Hash"],
+    status: "selesai",
+    link: "https://wiruu31.github.io/blockchain-keep/index.html"
+  },
 ];
 
 /* --- Daftar skill (Section Skills) ---
