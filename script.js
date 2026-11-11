@@ -114,6 +114,14 @@ const SKILLS = [
     ]
   },
   {
+    grup: "Ekonomi",
+    items: [
+      { nama: "Akuntansi",      level: "Menengah" },
+      { nama: "Mikroekonomi",   level: "Menengah" },
+      { nama: "Makroekonomi",   level: "Menengah" }
+    ]
+  },
+  {
     grup: "Finansial",
     items: [
       { nama: "Trading",   level: "Menengah" },
